@@ -1,8 +1,16 @@
 ---
 to: <%= absPath %>/<%= component_name %>.jsx
 ---
-import style from './<%= component_name %>.module.css';
+import PropTypes from 'prop-types';
+// import style from './<%= component_name %>.module.css';
 
 export const <%= component_name %> = () => {
-  return <div></div>
-}
+  console.log('<%= component_name %>');
+  return (
+    <div></div>
+  );
+};
+
+<%= component_name %.propTypes = {
+
+};
