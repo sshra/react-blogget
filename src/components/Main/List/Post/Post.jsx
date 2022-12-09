@@ -7,7 +7,6 @@ import Thumbnail from './Thumbnail';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date, thumbnail} = postData;
-  console.log(title, author, ups, date);
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} altText={title}/>

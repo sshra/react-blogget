@@ -12,7 +12,7 @@ export const Header = () =>
         <Logo />
         <Heading text="Page title"/>
         <Search />
-        <Auth auth={false} />
+        <Auth auth={''} />
       </div>
     </Layout>
   </header>
