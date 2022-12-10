@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import style from './Rating.module.css';
 import PropTypes from 'prop-types';
+import {Text} from '../../../../../UI/Text';
 // import style from './Rating.module.css';
 
 export const Rating = (props) => {
@@ -12,7 +13,9 @@ export const Rating = (props) => {
         onClick={() => setUps(ups + 1)}
         className={style.up}
         aria-label="Increase rating" />
-      <p className={style.ups}>{ups}</p>
+      <Text className={style.ups}>
+        {ups}
+      </Text>
       <button
         onClick={() => setUps(ups - 1)}
         className={style.down}

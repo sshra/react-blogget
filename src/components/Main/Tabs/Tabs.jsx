@@ -4,22 +4,24 @@ import PropTypes from 'prop-types';
 import {assignId} from '../../../utils/generateRandomId';
 
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
-import {ReactComponent as EyeIcon} from './img/eye.svg';
-import {ReactComponent as HomeIcon} from './img/home.svg';
-import {ReactComponent as PostIcon} from './img/post.svg';
-import {ReactComponent as SaveIcon} from './img/save.svg';
+import {ReactComponent as MainIcon} from './img/home.svg';
+import {ReactComponent as TopIcon} from './img/top.svg';
+import {ReactComponent as BestIcon} from './img/best.svg';
+import {ReactComponent as HotIcon} from './img/hot.svg';
 import {debounceRaf} from '../../../utils/debounce';
+import {Text} from '../../../UI/Text';
 
 const LIST = [
-  {value: 'Front', Icon: HomeIcon},
-  {value: 'Looked', Icon: EyeIcon},
-  {value: 'Saved', Icon: SaveIcon},
-  {value: 'My posts', Icon: PostIcon},
+  {value: 'Main', Icon: MainIcon},
+  {value: 'Top', Icon: TopIcon},
+  {value: 'Best', Icon: BestIcon},
+  {value: 'Hot', Icon: HotIcon},
 ].map(assignId);
 
 export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState();
   const [isDropdown, setIsDropdown] = useState(true);
+  const [menuLabel, setMenuLabel] = useState('Main');
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -44,7 +46,7 @@ export const Tabs = () => {
         <button
           className={style.btn}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          Add Item
+          {menuLabel}
           <ArrowIcon width={15} height={15} />
         </button>
       </div>
@@ -54,14 +56,14 @@ export const Tabs = () => {
           className={style.list}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
           {LIST.map(({value, Icon, id}) => (
-            <li key={id}>
+            <Text As='li' key={id}>
               <button
                 className={style.btn}
-                onClick={() => console.log(value)}>
+                onClick={() => setMenuLabel(value)}>
                 {value}
                 {Icon && <Icon width={32} height={32}/>}
               </button>
-            </li>
+            </Text>
           ))}
         </ul>
       }

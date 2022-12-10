@@ -66,29 +66,6 @@
         width: 25px;
         height: 25px;
     }
-
-    .rating {
-        padding-top: 0;
-        padding-bottom: 10px;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-
-    .up,
-    .down {
-        width: 24px;
-        height: 24px;
-        transition: outline-color 0.36s ease-in-out,
-            background-color 0.36s ease-in-out;
-        outline: 1px solid transparent;
-        border-radius: 50%;
-        outline-offset: 3px;
-    }
-
-    .up:hover,
-    .down:hover {
-        outline-color: #cc6633;
-    }
 }
 
 @media (min-width: 768px) {

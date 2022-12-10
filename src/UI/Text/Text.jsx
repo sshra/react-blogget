@@ -13,6 +13,8 @@ export const Text = prop => {
     children,
     href,
     center,
+    bold,
+    medium,
   } = prop;
 
   const classes = classNames(
@@ -22,6 +24,8 @@ export const Text = prop => {
     {[style[`fst${tsize}`]]: tsize},
     {[style[`fsd${dsize}`]]: dsize},
     {[style.center]: center},
+    {[style.bold]: bold},
+    {[style.medium]: medium},
   );
 
   return <As className={classes} href={href}>{children}</As>;
@@ -36,9 +40,12 @@ Text.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
+    PropTypes.number,
     PropTypes.object,
     PropTypes.array,
   ]),
   href: PropTypes.string,
   center: PropTypes.bool,
+  bold: PropTypes.bool,
+  medium: PropTypes.bool,
 };
