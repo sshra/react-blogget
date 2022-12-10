@@ -11,6 +11,6 @@ export const <%= component_name %> = () => {
   );
 };
 
-<%= component_name %.propTypes = {
+<%= component_name %>.propTypes = {
 
 };

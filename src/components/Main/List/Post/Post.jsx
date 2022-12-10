@@ -4,20 +4,14 @@ import PropTypes from 'prop-types';
 import DateTime from './DateTime';
 import Rating from './Rating';
 import Thumbnail from './Thumbnail';
+import Content from './Content';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date, thumbnail} = postData;
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} altText={title}/>
-      <div className={style.content}>
-        <h2 className={style.title}>
-          <a className={style.linkPost} href="#post">
-            {title}
-          </a>
-        </h2>
-        <a className={style.linkAuthor} href="#author">{author}</a>
-      </div>
+      <Content title={title} author={author} />
       <button className={style.delete}>
         <svg
           width='24'

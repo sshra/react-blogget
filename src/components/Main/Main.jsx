@@ -6,8 +6,7 @@ import List from './List';
 export const Main = () =>
   <main className={style.main}>
     <Layout>
-      <Tabs />
-      <List />
+      <Tabs/>
+      <List/>
     </Layout>
-  </main>
-;
+  </main>;
