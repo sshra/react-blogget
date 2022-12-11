@@ -54,7 +54,7 @@ export const Tabs = () => {
       {(isDropdownOpen || !isDropdown) &&
         <ul
           className={style.list}
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          onClick={() => setIsDropdownOpen(false)}>
           {LIST.map(({value, Icon, id}) => (
             <Text As='li' key={id}>
               <button

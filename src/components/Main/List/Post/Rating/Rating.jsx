@@ -2,6 +2,7 @@ import {useState} from 'react';
 import style from './Rating.module.css';
 import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
+import Svg from '../../../../../UI/Svg';
 // import style from './Rating.module.css';
 
 export const Rating = (props) => {
@@ -12,14 +13,18 @@ export const Rating = (props) => {
       <button
         onClick={() => setUps(ups + 1)}
         className={style.up}
-        aria-label="Increase rating" />
+        aria-label="Increase rating">
+        <Svg iconName='ratingUp' className={style.svg}/>
+      </button>
       <Text className={style.ups}>
         {ups}
       </Text>
       <button
         onClick={() => setUps(ups - 1)}
         className={style.down}
-        aria-label="Decrease rating"/>
+        aria-label="Decrease rating">
+        <Svg iconName='ratingDown' className={style.svg}/>
+      </button>
     </div>
   );
 };

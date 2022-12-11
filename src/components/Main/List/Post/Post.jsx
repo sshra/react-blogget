@@ -1,6 +1,6 @@
 import style from './Post.module.css';
 import PropTypes from 'prop-types';
-import {ReactComponent as TrashIcon} from './img/trash.svg';
+import Svg from '../../../../UI/Svg';
 
 import DateTime from './DateTime';
 import Rating from './Rating';
@@ -14,7 +14,7 @@ export const Post = ({postData}) => {
       <Thumbnail src={thumbnail} altText={title}/>
       <Content title={title} author={author} />
       <button className={style.delete}>
-        <TrashIcon />
+        <Svg iconName='trashCan'/>
       </button>
       <Rating ups={ups}/>
       <DateTime dateTime={date}/>
