@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
+import {ReactComponent as LogoutIcon} from './img/exit.svg';
 import {ReactComponent as TrashCan} from './img/trash.svg';
 import {ReactComponent as RatingUp} from './img/up.svg';
 import {ReactComponent as RatingDown} from './img/down.svg';
@@ -8,6 +9,7 @@ import {ReactComponent as SearchIcon} from './img/search.svg';
 
 const iconList = {
   login: LoginIcon,
+  logout: LogoutIcon,
   trashCan: TrashCan,
   ratingUp: RatingUp,
   ratingDown: RatingDown,

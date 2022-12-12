@@ -10,8 +10,26 @@ export const useToken = (state) => {
       console.log(token);
       setToken(token);
     }
+
+    if (localStorage.getItem('bearer')) {
+      setToken(localStorage.getItem('bearer'));
+    }
   }, []);
 
-  return [token];
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('bearer', token);
+    }
+
+    if (token === null) {
+      localStorage.removeItem('bearer');
+    }
+  }, [token]);
+
+  const delToken = () => {
+    setToken(null);
+  };
+
+  return [token, delToken];
 };
 
