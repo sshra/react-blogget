@@ -27,6 +27,7 @@ export const Tabs = () => {
     if (document.documentElement.clientWidth < 768) {
       setIsDropdown(true);
     } else {
+      setIsDropdownOpen(false);
       setIsDropdown(false);
     }
   };
@@ -54,7 +55,7 @@ export const Tabs = () => {
       {(isDropdownOpen || !isDropdown) &&
         <ul
           className={style.list}
-          onClick={() => setIsDropdownOpen(false)}>
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
           {LIST.map(({value, Icon, id}) => (
             <Text As='li' key={id}>
               <button
@@ -76,4 +77,3 @@ Tabs.propTypes = {
   setList: PropTypes.func,
   addItem: PropTypes.func,
 };
-
