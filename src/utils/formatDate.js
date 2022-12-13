@@ -1,14 +1,18 @@
-
-const formatDate = date => {
-  const options = {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: 'numeric',
-  };
-  return new Intl.DateTimeFormat('ru', options)
-    .format(new Date(date));
+const options = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: 'numeric',
 };
 
-export default formatDate;
+const formatDate = date =>
+  new Intl.DateTimeFormat('ru', options)
+    .format(new Date(date));
+
+const formatTimestamp = time =>
+  new Intl.DateTimeFormat('ru', options)
+    .format(new Date(time * 1000));
+
+export { formatDate, formatTimestamp };
+

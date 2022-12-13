@@ -2,11 +2,11 @@ import style from './Thumbnail.module.css';
 import PropTypes from 'prop-types';
 import notphoto from './img/notphoto.jpg';
 
-export const Thumbnail = (props) =>
+export const Thumbnail = ({ src, altTitle }) =>
   <img
     className={style.img}
-    src={props.src ? props.src : notphoto}
-    alt={props.altTitle} />;
+    src={src && src !== 'self' ? src : notphoto}
+    alt={altTitle} />;
 
 Thumbnail.propTypes = {
   src: PropTypes.string,
