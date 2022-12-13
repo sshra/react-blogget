@@ -1,15 +1,15 @@
-import {useState, useContext} from 'react';
+import { useState, useContext } from 'react';
 import style from './Auth.module.css';
 import Svg from '../../../UI/Svg';
-import {urlAuth} from '../../../api/auth';
-import {Text} from '../../../UI/Text';
-import {tokenContext} from '../../../context/tokenContext';
-import {authContext} from '../../../context/authContext';
+import { urlAuth } from '../../../api/auth';
+import { Text } from '../../../UI/Text';
+import { tokenContext } from '../../../context/tokenContext';
+import { authContext } from '../../../context/authContext';
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
+  const { delToken } = useContext(tokenContext);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const { auth, clearAuth } = useContext(authContext);
 
   const profileMenuSwitch = () => {
     setIsProfileMenu(!isProfileMenu);

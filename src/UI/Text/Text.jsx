@@ -15,22 +15,20 @@ export const Text = prop => {
     center,
     bold,
     medium,
-    onClick,
   } = prop;
 
   const classes = classNames(
     className,
     style[color],
-    {[style[`fs${size}`]]: size},
-    {[style[`fst${tsize}`]]: tsize},
-    {[style[`fsd${dsize}`]]: dsize},
-    {[style.center]: center},
-    {[style.bold]: bold},
-    {[style.medium]: medium},
+    { [style[`fs${size}`]]: size },
+    { [style[`fst${tsize}`]]: tsize },
+    { [style[`fsd${dsize}`]]: dsize },
+    { [style.center]: center },
+    { [style.bold]: bold },
+    { [style.medium]: medium }
   );
 
-  return <As className={classes} href={href}
-    onClick={() => onClick()}>{children}</As>;
+  return <As className={classes} href={href}>{children}</As>;
 };
 
 Text.propTypes = {
@@ -50,5 +48,4 @@ Text.propTypes = {
   center: PropTypes.bool,
   bold: PropTypes.bool,
   medium: PropTypes.bool,
-  onClick: PropTypes.func,
 };

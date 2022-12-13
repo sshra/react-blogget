@@ -1,7 +1,7 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import style from './Rating.module.css';
 import PropTypes from 'prop-types';
-import {Text} from '../../../../../UI/Text';
+import { Text } from '../../../../../UI/Text';
 import Svg from '../../../../../UI/Svg';
 // import style from './Rating.module.css';
 

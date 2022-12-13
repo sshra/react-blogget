@@ -1,7 +1,9 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-export const useToken = (state) => {
-  const [token, setToken] = useState(state);
+export const useToken = () => {
+  const [token, setToken] = useState(localStorage.getItem('bearer'));
+  const delToken = () => setToken(null);
+  console.log(token);
 
   useEffect(() => {
     if (location.pathname.includes('/auth')) {
@@ -9,26 +11,25 @@ export const useToken = (state) => {
         .get('access_token');
       console.log(token);
       setToken(token);
-    }
-
-    if (localStorage.getItem('bearer')) {
-      setToken(localStorage.getItem('bearer'));
+    } else {
+      const localValue = localStorage.getItem('bearer');
+      if (localValue && token !== localValue) {
+        console.log(`Get token value from local storage`);
+        setToken(localValue);
+      }
     }
   }, []);
 
   useEffect(() => {
     if (token) {
+      console.log(`set token on token.change event ${token}`);
       localStorage.setItem('bearer', token);
     }
-
     if (token === null) {
+      console.log(`remove empty token on token.change event`);
       localStorage.removeItem('bearer');
     }
   }, [token]);
-
-  const delToken = () => {
-    setToken(null);
-  };
 
   return [token, delToken];
 };

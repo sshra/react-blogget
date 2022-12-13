@@ -7,8 +7,8 @@ import Rating from './Rating';
 import Thumbnail from './Thumbnail';
 import Content from './Content';
 
-export const Post = ({postData}) => {
-  const {title, author, ups, date, thumbnail} = postData;
+export const Post = ({ postData }) => {
+  const { title, author, ups, date, thumbnail } = postData;
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} altText={title}/>

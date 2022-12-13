@@ -1,12 +1,12 @@
-import {useState, useEffect, useContext} from 'react';
-import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
+import { useState, useEffect, useContext } from 'react';
+import { URL_API } from '../api/const';
+import { tokenContext } from '../context/tokenContext';
 
 export const useAuth = () => {
   const [auth, setAuth] = useState({});
-  const clearAuth = () => setAuth({});
-  const {token, delToken} = useContext(tokenContext);
+  const { token, delToken } = useContext(tokenContext);
 
+  const clearAuth = () => setAuth({});
   useEffect(() => {
     if (!token) return;
     fetch(`${URL_API}/api/v1/me`, {
@@ -20,7 +20,7 @@ export const useAuth = () => {
         }
         return response.json();
       })
-      .then(({name, icon_img: iconImg}) => {
+      .then(({ name, icon_img: iconImg }) => {
         setAuth({
           name,
           img: iconImg.replace(/\?.*$/, '')
