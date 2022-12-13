@@ -1,29 +1,38 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import style from './Auth.module.css';
-import PropTypes from 'prop-types';
 import Svg from '../../../UI/Svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useAuth} from '../../../hooks/useAuth';
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const [auth] = useAuth({});
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
+  const {auth, clearAuth} = useContext(authContext);
+
+  const profileMenuSwitch = () => {
+    setIsProfileMenu(!isProfileMenu);
+  };
+
+  const logOut = () => {
+    delToken();
+    clearAuth();
+  };
 
   return (
     <div className={style.container}>
       {auth.name ? (
         <>
-          <button className={style.btn}>
+          <button className={style.btn} onClick={profileMenuSwitch}>
             <img
               className={style.img}
               src={auth.img} title={auth.name}
               alt={`Avatar ${auth.name}`}
-              onClick={() => setIsProfileMenu(!isProfileMenu)}
             />
           </button>
           { isProfileMenu &&
-            <a href="/" onClick={() => delToken()}>
+            <a href="/" onClick={logOut}>
               <Text
                 className={style.logout}
                 size={14} color='white'>
@@ -41,9 +50,4 @@ export const Auth = ({token, delToken}) => {
       }
     </div>
   );
-};
-
-Auth.propTypes = {
-  token: PropTypes.string,
-  delToken: PropTypes.func,
 };

@@ -1,10 +1,11 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {URL_API} from '../api/const';
-import {useToken} from './useToken';
+import {tokenContext} from '../context/tokenContext';
 
-export const useAuth = (state) => {
+export const useAuth = () => {
   const [auth, setAuth] = useState({});
-  const [token, delToken] = useToken('');
+  const clearAuth = () => setAuth({});
+  const {token, delToken} = useContext(tokenContext);
 
   useEffect(() => {
     if (!token) return;
@@ -14,25 +15,23 @@ export const useAuth = (state) => {
       },
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else if (response.status === 401) {
-          delToken();
-          setAuth({});
+        if (response.status === 401 || !response.ok) {
+          throw new Error(response.status);
         }
+        return response.json();
       })
-      .then((data) => {
-        console.log(data);
+      .then(({name, icon_img: iconImg}) => {
         setAuth({
-          name: data.name,
-          img: data.icon_img.replace(/\?.*$/, ''),
+          name,
+          img: iconImg.replace(/\?.*$/, '')
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setAuth({});
+        delToken();
       });
   }, [token]);
 
-  return [auth, setAuth];
+  return [auth, clearAuth];
 };
