@@ -8,8 +8,6 @@ import Thumbnail from './Thumbnail';
 import Content from './Content';
 
 export const Post = ({ postData }) => {
-  console.log(postData);
-
   const { title, author, ups, created: timestamp, thumbnail } = postData;
   return (
     <li className={style.post}>
