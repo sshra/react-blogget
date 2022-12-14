@@ -8,11 +8,18 @@ import Thumbnail from './Thumbnail';
 import Content from './Content';
 
 export const Post = ({ postData }) => {
-  const { title, author, ups, created: timestamp, thumbnail } = postData;
+  const {
+    title,
+    author,
+    ups,
+    selftext: markdown,
+    created: timestamp,
+    thumbnail
+  } = postData;
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} altText={title}/>
-      <Content title={title} author={author} />
+      <Content title={title} author={author} markdown={markdown} />
       <button className={style.delete}>
         <Svg iconName='trashCan'/>
       </button>

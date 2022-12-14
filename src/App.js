@@ -4,17 +4,15 @@ import { AuthContextProvider } from './context/authContext';
 import { PostsContextProvider } from './context/postsContext';
 import { TokenContextProvider } from './context/tokenContext';
 
-function App() {
-  return (
-    <TokenContextProvider>
-      <AuthContextProvider>
-        <Header/>
-        <PostsContextProvider>
-          <Main />
-        </PostsContextProvider>
-      </AuthContextProvider>
-    </TokenContextProvider>
-  );
-}
+const App = () => (
+  <TokenContextProvider>
+    <AuthContextProvider>
+      <Header/>
+      <PostsContextProvider>
+        <Main />
+      </PostsContextProvider>
+    </AuthContextProvider>
+  </TokenContextProvider>
+);
 
 export default App;
