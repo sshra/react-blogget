@@ -5,19 +5,14 @@ import style from './FormComment.module.css';
 import { updateComment } from '../../../../../../store';
 
 export const FormComment = () => {
-  // lesson 9
-  //  const store = useStore();
   const value = useSelector(state => state.comment);
   const dispatch = useDispatch();
-  // lesson 9 fin
-
   const [isOpened, setIsOpened] = useState(false);
   const textRef = useRef(null);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     console.log(textRef.current.value);
-    console.log(value);
   };
 
   const handleChange = e => {
