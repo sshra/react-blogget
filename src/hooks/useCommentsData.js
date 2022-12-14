@@ -2,13 +2,16 @@ import { useState, useEffect, useContext } from 'react';
 import { URL_API } from '../api/const';
 import { tokenContext } from '../context/tokenContext';
 
-export const usePosts = () => {
-  const [posts, setPosts] = useState([]);
+export const useCommentsData = (id) => {
+  const [commentData, setCommentData] = useState({
+    post: null,
+    comments: null }
+  );
   const { token, delToken } = useContext(tokenContext);
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${URL_API}/best`, {
+    fetch(`${URL_API}/comments/article?article=${id}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
@@ -19,15 +22,20 @@ export const usePosts = () => {
         }
         return response.json();
       })
-      .then((posts) => {
-        setPosts(posts.data.children);
+      .then((data) => {
+        setCommentData(
+          {
+            post: data[0].data.children[0].data,
+            comments: data[1].data.children,
+          }
+        );
       })
       .catch((err) => {
         console.error(err);
-        setPosts([]);
+        setCommentData([]);
         delToken();
       });
   }, [token]);
 
-  return [posts];
+  return commentData;
 };

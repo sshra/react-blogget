@@ -12,14 +12,14 @@ export const Post = ({ postData }) => {
     title,
     author,
     ups,
-    selftext: markdown,
+    id,
     created: timestamp,
     thumbnail
   } = postData;
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} altText={title}/>
-      <Content title={title} author={author} markdown={markdown} />
+      <Content title={title} author={author} postId={id} />
       <button className={style.delete}>
         <Svg iconName='trashCan'/>
       </button>

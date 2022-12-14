@@ -4,7 +4,7 @@ import { Text } from '../../../../../UI/Text';
 import { useState } from 'react';
 import Modal from '../../../../Modal';
 
-export const Content = ({ title, author, markdown }) => {
+export const Content = ({ title, author, postId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -26,9 +26,7 @@ export const Content = ({ title, author, markdown }) => {
         {author}
       </Text>
       {isModalOpen && <Modal
-        markdown={markdown}
-        title={title}
-        author={author}
+        postId={postId}
         closeModal={() => setIsModalOpen(false)} />}
     </div>
   );
@@ -37,5 +35,5 @@ export const Content = ({ title, author, markdown }) => {
 Content.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
-  markdown: PropTypes.string,
+  postId: PropTypes.string,
 };

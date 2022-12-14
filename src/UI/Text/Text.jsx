@@ -16,6 +16,8 @@ export const Text = prop => {
     bold,
     medium,
     onClick,
+    rel,
+    target,
   } = prop;
 
   const classes = classNames(
@@ -29,7 +31,12 @@ export const Text = prop => {
     { [style.medium]: medium }
   );
 
-  return <As className={classes} href={href} onClick={onClick}>{children}</As>;
+  return <As
+    className={classes}
+    href={href}
+    target={target}
+    rel={rel}
+    onClick={onClick}>{children}</As>;
 };
 
 Text.propTypes = {
@@ -46,6 +53,8 @@ Text.propTypes = {
     PropTypes.array,
   ]),
   href: PropTypes.string,
+  rel: PropTypes.string,
+  target: PropTypes.string,
   center: PropTypes.bool,
   bold: PropTypes.bool,
   medium: PropTypes.bool,

@@ -4,10 +4,16 @@ import { ReactComponent as CloseIcon } from './img/close.svg';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
+import { Text } from '../../UI/Text';
+import FormComment from '../Main/List/Post/Comments/FormComment';
+import Comments from '../Main/List/Post/Comments';
+import { useCommentsData } from '../../hooks/useCommentsData';
+import { CentredText } from '../../UI/CentredText/CentredText';
 
-export const Modal = ({ title, author, markdown, closeModal }) => {
+export const Modal = ({ postId: id, closeModal }) => {
   const overlayRef = useRef(null);
+  const { post, comments } = useCommentsData(id);
 
   const handleClick = e => {
     const target = e.target;
@@ -27,21 +33,31 @@ export const Modal = ({ title, author, markdown, closeModal }) => {
     ReactDOM.createPortal(
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
-          <h2 className={style.title}>{title}</h2>
-          <div className={style.content}>
-            <Markdown options={{
-              overrides: {
-                a: {
-                  props: {
-                    target: '_blank',
+          { post ?
+            <Fragment>
+              <h2 className={style.title}>{post.title}</h2>
+              <div className={style.content}>
+                <Markdown options={{
+                  overrides: {
+                    a: {
+                      props: {
+                        target: '_blank',
+                      }
+                    }
                   }
-                }
-              }
-            }}>
-              {markdown}
-            </Markdown>
-          </div>
-          <p className={style.author}>{author}</p>
+                }}>
+                  {post.selftext}
+                </Markdown>
+              </div>
+              <Text As='p' className={style.author}>
+                {post.author}
+              </Text>
+
+              <FormComment />
+              <Comments comments={comments} />
+            </Fragment> :
+            <CentredText text='Loading an article...' />
+          }
           <button className={style.close} onClick={closeModal}>
             <CloseIcon/>
           </button>
