@@ -1,10 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { URL_API } from '../api/const';
-import { tokenContext } from '../context/tokenContext';
+import { deleteToken } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const usePosts = () => {
   const [posts, setPosts] = useState([]);
-  const { token, delToken } = useContext(tokenContext);
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.token);
 
   useEffect(() => {
     if (!token) return;
@@ -25,7 +27,7 @@ export const usePosts = () => {
       .catch((err) => {
         console.error(err);
         setPosts([]);
-        delToken();
+        dispatch(deleteToken());
       });
   }, [token]);
 
