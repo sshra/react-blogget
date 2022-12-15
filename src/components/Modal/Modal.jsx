@@ -22,10 +22,21 @@ export const Modal = ({ postId: id, closeModal }) => {
     }
   };
 
+  const handleEscape = e => {
+    if (
+      (e.target.tagName !== 'TEXTAREA') &&
+      (e = e || window.event) &&
+      (e.key === 'Escape')) {
+      closeModal();
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('click', handleClick);
+    document.addEventListener('keyup', handleEscape);
     return () => {
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('keyup', handleEscape);
     };
   }, []);
 
