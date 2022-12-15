@@ -5,11 +5,11 @@ import { Text } from '../../../../../UI/Text';
 
 export const Comments = ({ comments }) =>
   <ul>
-    {
-      comments.length ?
+    {comments.length ?
         comments.map((commentItem, commentIndex) =>
-          <Comment key={commentItem.data.id} data={commentItem}></Comment>) :
-        <Text bold>No comments</Text>
+          (commentItem.kind === 't1' &&
+          <Comment key={commentItem.data.id} data={commentItem}></Comment>)) :
+          <Text bold>No comments</Text>
     }
   </ul>;
 

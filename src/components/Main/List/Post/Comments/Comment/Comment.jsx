@@ -5,15 +5,9 @@ import DateTime from '../../DateTime';
 import { Text } from '../../../../../../UI/Text';
 
 export const Comment = ({ data }) => {
-  const { author, body, created, id,
-    permalink: src, children: childrenRecords } = data.data;
-
-  if (childrenRecords) {
-    console.log(childrenRecords);
-  }
+  const { author, body, created, id, permalink: src } = data.data;
 
   return (
-    !childrenRecords &&
     <li key={id} className={style.comment}>
       <Text As='a' color='orange'
         size={12}
