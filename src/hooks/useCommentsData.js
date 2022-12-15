@@ -13,7 +13,7 @@ export const useCommentsData = (id) => {
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${URL_API}/comments/article?article=${id}`, {
+    fetch(`${URL_API}/comments/article?article=${id}&depth=1`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
