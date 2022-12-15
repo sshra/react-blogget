@@ -2,13 +2,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './FormComment.module.css';
-import { updateComment } from '../../../../../../store';
+import { updateComment } from '../../../../../../store/commentReducer';
+import { BeautyButton } from '../../../../../../UI/BeautyButton/BeautyButton';
+import { Text } from '../../../../../../UI/Text';
+import { useAuth } from '../../../../../../hooks/useAuth';
 
 export const FormComment = () => {
-  const value = useSelector(state => state.comment);
+  const value = useSelector(state => state.comment.comment);
   const dispatch = useDispatch();
   const [isOpened, setIsOpened] = useState(false);
   const textRef = useRef(null);
+  const [auth] = useAuth();
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -29,14 +33,20 @@ export const FormComment = () => {
     <div className={style.formContainer}>
       {isOpened ? (
         <form onSubmit={onFormSubmit} className={style.form}>
+          <h3 className={style.formTitle}>Wtire your comment:</h3>
+          <Text className={style.userName} bold size={16}>{auth.name}</Text>
           <div>
-            <textarea value={value} ref={textRef} onChange={handleChange} />
+            <textarea
+              className={style.textarea}
+              value={value}
+              ref={textRef}
+              onChange={handleChange} />
           </div>
-          <button>Send</button>
+          <BeautyButton>Send</BeautyButton>
         </form>) : (
-        <button onClick={() => setIsOpened(!isOpened)}>
+        <BeautyButton onClick={() => setIsOpened(!isOpened)}>
           Write a comment
-        </button>)
+        </BeautyButton>)
       }
     </div>
   );

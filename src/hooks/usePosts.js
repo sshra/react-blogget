@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { URL_API } from '../api/const';
-import { deleteToken } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteToken } from '../store/tokenReducer';
 
 export const usePosts = () => {
   const [posts, setPosts] = useState([]);
   const dispatch = useDispatch();
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${URL_API}/best`, {
+    fetch(`${URL_API}/new?limit=20`, {
       headers: {
         Authorization: `bearer ${token}`,
       },

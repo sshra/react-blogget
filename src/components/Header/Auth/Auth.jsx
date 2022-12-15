@@ -1,17 +1,18 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import style from './Auth.module.css';
 import Svg from '../../../UI/Svg';
 import { urlAuth } from '../../../api/auth';
 import { Text } from '../../../UI/Text';
-import { authContext } from '../../../context/authContext';
 import { useDispatch } from 'react-redux';
-import { deleteToken } from '../../../store';
+import { deleteToken } from '../../../store/tokenReducer';
+import { useAuth } from '../../../hooks/useAuth';
+import { AuthLoader } from './AuthLoader/AuthLoader';
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [isProfileMenu, setIsProfileMenu] = useState(false);
-  const { auth, clearAuth } = useContext(authContext);
-
+  const [auth, loading, clearAuth] = useAuth();
+  console.log(auth);
   const profileMenuSwitch = () => {
     setIsProfileMenu(!isProfileMenu);
   };
@@ -23,7 +24,8 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (<AuthLoader/>) :
+        auth?.name ? (
         <>
           <button className={style.btn} onClick={profileMenuSwitch}>
             <img
