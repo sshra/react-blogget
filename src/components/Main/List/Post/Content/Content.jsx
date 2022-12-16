@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import style from './Content.module.css';
 import { Text } from '../../../../../UI/Text';
 import { useState } from 'react';
-import Modal from '../../../../Modal';
+import Modal from '../../../../../UI/Modal';
+import { FullPost } from '../FullPost/FullPost';
 
 export const Content = ({ title, author, postId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,8 +27,9 @@ export const Content = ({ title, author, postId }) => {
         {author}
       </Text>
       {isModalOpen && <Modal
-        postId={postId}
-        closeModal={() => setIsModalOpen(false)} />}
+        closeModal={() => setIsModalOpen(false)}>
+        <FullPost postId={postId}/>
+      </Modal>}
     </div>
   );
 };

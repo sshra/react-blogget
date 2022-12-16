@@ -6,13 +6,13 @@ import { Text } from '../../../UI/Text';
 import { useDispatch } from 'react-redux';
 import { deleteToken } from '../../../store/tokenReducer';
 import { useAuth } from '../../../hooks/useAuth';
-import { AuthLoader } from './AuthLoader/AuthLoader';
+import Preloader from '../../../UI/Preloader';
+import { Toast } from '../../../UI/Toast/Toast';
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [isProfileMenu, setIsProfileMenu] = useState(false);
-  const [auth, loading, clearAuth] = useAuth();
-  console.log(auth);
+  const [auth, loading, clearAuth, error] = useAuth();
   const profileMenuSwitch = () => {
     setIsProfileMenu(!isProfileMenu);
   };
@@ -24,7 +24,7 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {loading ? (<AuthLoader/>) :
+      {loading ? (<Preloader/>) :
         auth?.name ? (
         <>
           <button className={style.btn} onClick={profileMenuSwitch}>
@@ -46,9 +46,12 @@ export const Auth = () => {
           }
         </>
         ) : (
-        <Text As='a' href={urlAuth} className={style.authLink}>
-          <Svg iconName='login' className={style.svg} />
-        </Text>
+        <>
+          <Text As='a' href={urlAuth} className={style.authLink}>
+            <Svg iconName='login' className={style.svg} />
+          </Text>
+          {error && <Toast type='error'>{error}</Toast>}
+        </>
         )
       }
     </div>

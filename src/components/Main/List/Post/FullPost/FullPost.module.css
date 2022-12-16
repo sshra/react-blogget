@@ -1,0 +1,47 @@
+.title {
+  margin-bottom: 30px;
+  padding-right: 50px;
+  font-size: 18px;
+}
+
+.content p {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+.content a {
+  color: var(--orange);
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  width: 15px;
+  height: 15px;
+}
+
+.loading {
+  padding: 50px 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    inset: 10%;
+  }
+
+  .modal h2 {
+    font-size: 24px;
+  }
+
+  .modal p {
+    font-size: 16px;
+  }
+}

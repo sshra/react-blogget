@@ -208,6 +208,7 @@
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "rest-spread-spacing": "error",
-    "yield-star-spacing": ["error", "after"]
+    "yield-star-spacing": ["error", "after"],
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }]
   }
 }

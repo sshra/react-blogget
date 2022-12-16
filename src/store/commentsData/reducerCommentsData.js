@@ -1,45 +1,39 @@
 import {
-  AUTH_LOGOUT,
-  AUTH_REQUEST,
-  AUTH_REQUEST_ERROR,
-  AUTH_REQUEST_SUCCESS } from './action';
+  COMMENTSDATA_REQUEST,
+  COMMENTSDATA_REQUEST_ERROR,
+  COMMENTSDATA_REQUEST_SUCCESS } from './action';
 
 const initialState = {
   loading: false,
-  data: {},
+  data: { post: null, comments: null },
   error: '',
 };
 
-const authReducer = (state = initialState, action) => {
+const commentsDataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_REQUEST:
+    case COMMENTSDATA_REQUEST:
       return {
         ...state,
         loading: true,
         error: '',
       };
-    case AUTH_REQUEST_SUCCESS:
+    case COMMENTSDATA_REQUEST_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.data,
         error: '',
       };
-    case AUTH_REQUEST_ERROR:
+    case COMMENTSDATA_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
+        data: { post: null, comments: null },
         error: action.error,
-      };
-    case AUTH_LOGOUT:
-      return {
-        ...state,
-        loading: false,
-        data: {},
       };
     default:
       return state;
   }
 };
 
-export default authReducer;
+export default commentsDataReducer;

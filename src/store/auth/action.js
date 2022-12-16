@@ -25,26 +25,28 @@ export const authLogout = (error) => ({
   type: AUTH_LOGOUT,
 });
 
-export const authRequestAsync = () => (dispatch, getState) => {
-  const token = getState().token.token;
-  if (!token) return;
-  dispatch(authRequest());
+export const authRequestAsync =
+  // Interpreted by the thunk middleware:
+  () => (dispatch, getState) => {
+    const token = getState().token.token;
+    if (!token) return;
+    dispatch(authRequest());
 
-  axios(`${URL_API}/api/v1/me`, {
-    headers: {
-      Authorization: `bearer ${token}`,
-    },
-  })
-    .then(({ data: { name, icon_img: iconImg } }) => {
-      const data = {
-        name,
-        img: iconImg.replace(/\?.*$/, '')
-      };
-      dispatch(authRequestSuccess(data));
+    axios(`${URL_API}/api/v1/me`, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     })
-    .catch((err) => {
-      console.error(err);
-      dispatch(deleteToken());
-      dispatch(authRequestError(err.toString()));
-    });
-};
+      .then(({ data: { name, icon_img: iconImg } }) => {
+        const data = {
+          name,
+          img: iconImg.replace(/\?.*$/, '')
+        };
+        dispatch(authRequestSuccess(data));
+      })
+      .catch((err) => {
+        console.error(err);
+        dispatch(deleteToken());
+        dispatch(authRequestError(err.toString()));
+      });
+  };

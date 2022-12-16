@@ -28,7 +28,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "comp": "hygen create component"
+    "comp": "hygen create component",
+    "create-store": "hygen create store"
   },
   "eslintConfig": {
     "extends": [

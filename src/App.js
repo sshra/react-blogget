@@ -8,6 +8,7 @@ import { getToken } from './api/token';
 const App = () => {
   const dispatch = useDispatch();
   dispatch(updateToken(getToken()));
+
   return (
     <>
       <Header/>
