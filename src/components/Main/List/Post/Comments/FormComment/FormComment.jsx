@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import style from './FormComment.module.css';
 import { updateComment } from '../../../../../../store/commentReducer';
 import { BeautyButton } from '../../../../../../UI/BeautyButton/BeautyButton';
+import { Text } from '../../../../../../UI/Text';
 
 export const FormComment = () => {
   const value = useSelector(state => state.commentForm.comment);
   const dispatch = useDispatch();
   const [isOpened, setIsOpened] = useState(false);
   const textRef = useRef(null);
+  const authName = useSelector(state => state.auth.data.name);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ export const FormComment = () => {
       {isOpened ? (
         <form onSubmit={onFormSubmit} className={style.form}>
           <h3 className={style.formTitle}>Wtire your comment:</h3>
+          <Text className={style.userName} bold size={16}>{authName}</Text>
           <div>
             <textarea
               className={style.textarea}
