@@ -3,7 +3,8 @@ import style from './List.module.css';
 import Post from './Post';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postsDataRequestAsync } from '../../../store/postsData/action';
+import { postsDataRequestAsync, postsDataAutoloadRequest }
+  from '../../../store/postsData/action';
 import { Outlet, useParams } from 'react-router-dom';
 import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
@@ -14,16 +15,16 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const { page } = useParams();
-  const isDeepEnough = depth > autoloadDepth;
+  const isDeepEnough = depth >= autoloadDepth;
 
   useEffect(() => {
     dispatch(postsDataRequestAsync(page, pageSize));
   }, [page]);
 
-  useEffect((isDeepEnough) => {
+  useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries.length && entries[0].isIntersecting) {
-        dispatch(postsDataRequestAsync());
+        dispatch(postsDataAutoloadRequest(autoloadDepth));
       }
     }, {
       rootMargin: '100px',
@@ -38,7 +39,7 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
         observer.unobserve(endList.current);
       }
     };
-  }, [depth]);
+  });
 
   return (
     <>
@@ -47,9 +48,11 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
           <Post key={postData.data.id} postData={postData.data} />)}
         {loading && (<Preloader height={250} size={100}/>)}
         { isDeepEnough ?
-          <BeautyButton onClick={ () => dispatch(postsDataRequestAsync()) }>
-            Show more
-          </BeautyButton> :
+          <li className={style.showMoreContainer} >
+            <BeautyButton onClick={ () => dispatch(postsDataRequestAsync()) }>
+              Show more
+            </BeautyButton>
+          </li> :
           <li ref={endList} className={style.end} />
         }
       </ul>

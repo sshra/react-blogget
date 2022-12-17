@@ -4,6 +4,10 @@
     justify-content: space-around;
     gap: 30px;
 }
+.showMoreContainer {
+    flex-basis: 100%;
+    text-align: center;
+}
 .end {
     flex-basis: 100%;
 }

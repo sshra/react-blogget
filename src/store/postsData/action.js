@@ -79,3 +79,11 @@ export const postsDataRequestAsync =
         dispatch(postsDataRequestError(err.toString()));
       });
   };
+
+export const postsDataAutoloadRequest =
+  (autoloadDepth) => (dispatch, getState) => {
+    const depth = getState().posts.depth;
+    if (depth < autoloadDepth) {
+      dispatch(postsDataRequestAsync());
+    }
+  };
