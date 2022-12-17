@@ -1,5 +1,6 @@
 import {
   CHANGE_PAGE,
+  CHANGE_PAGE_SIZE,
   POSTSDATA_REQUEST,
   POSTSDATA_REQUEST_ERROR,
   POSTSDATA_REQUEST_SUCCESS,
@@ -12,6 +13,8 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  depth: 0,
+  pageSize: 10,
 };
 
 const postsDataReducer = (state = initialState, action) => {
@@ -30,6 +33,8 @@ const postsDataReducer = (state = initialState, action) => {
         posts: action.posts,
         after: action.after,
         isLast: !action.after,
+        depth: 1,
+        pageSize: action.pageSize,
       };
     case POSTSDATA_REQUEST_SUCCESS_AFTER:
       return {
@@ -39,6 +44,7 @@ const postsDataReducer = (state = initialState, action) => {
         posts: [...state.posts, ...action.posts],
         after: action.after,
         isLast: !action.after,
+        depth: state.depth + 1,
       };
     case POSTSDATA_REQUEST_ERROR:
       return {
@@ -52,6 +58,12 @@ const postsDataReducer = (state = initialState, action) => {
         page: action.page,
         after: '',
         isLast: false,
+        depth: 0,
+      };
+    case CHANGE_PAGE_SIZE:
+      return {
+        ...state,
+        pageSize: action.pageSize,
       };
     default:
       return state;
