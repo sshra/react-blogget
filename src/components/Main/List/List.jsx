@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { postsContext } from '../../../context/postsContext';
 import Preloader from '../../../UI/Preloader';
 import style from './List.module.css';
 import Post from './Post';
+import { usePosts } from '../../../hooks/usePosts';
 
 export const List = () => {
-  const { posts: postsData, loading } = useContext(postsContext);
+  const [postsData, loading] = usePosts();
   return (
     <ul className={style.list}>
       {loading ?
