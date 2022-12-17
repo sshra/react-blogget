@@ -4,9 +4,16 @@ import { ReactComponent as CloseIcon } from './img/close.svg';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const Modal = ({ children, closeModal }) => {
+export const Modal = ({ children }) => {
+  const { page } = useParams();
+  const navigate = useNavigate();
   const overlayRef = useRef(null);
+
+  const closeModal = () => {
+    navigate(`/category/${page}`);
+  };
 
   const handleClick = e => {
     const target = e.target;
@@ -33,12 +40,21 @@ export const Modal = ({ children, closeModal }) => {
     };
   }, []);
 
+  useEffect(() => {
+    document.addEventListener('keyup', handleEscape);
+    return () => {
+      document.removeEventListener('keyup', handleEscape);
+    };
+  }, []);
+
   return (
     ReactDOM.createPortal(
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
           {children}
-          <button className={style.close} onClick={closeModal}>
+          <button
+            className={style.close}
+            onClick={() => closeModal() }>
             <CloseIcon/>
           </button>
         </div>

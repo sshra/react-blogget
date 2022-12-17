@@ -8,9 +8,12 @@ import Comments from '../Comments';
 import { useCommentsData } from '../../../../../hooks/useCommentsData';
 import Preloader from '../../../../../UI/Preloader';
 import { Toast } from '../../../../../UI/Toast/Toast';
+import { useParams } from 'react-router-dom';
 
-export const FullPost = ({ postId: id }) => {
+export const FullPost = () => {
+  const { id } = useParams();
   const { data, loading, error } = useCommentsData(id);
+
   return (
     loading ?
       <Preloader size={100}/> :

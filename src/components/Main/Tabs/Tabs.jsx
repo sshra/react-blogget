@@ -10,18 +10,20 @@ import { ReactComponent as BestIcon } from './img/best.svg';
 import { ReactComponent as HotIcon } from './img/hot.svg';
 import { debounceRaf } from '../../../utils/debounce';
 import { Text } from '../../../UI/Text';
+import { useNavigate } from 'react-router-dom';
 
 const LIST = [
-  { value: 'Main', Icon: MainIcon },
-  { value: 'Top', Icon: TopIcon },
-  { value: 'Best', Icon: BestIcon },
-  { value: 'Hot', Icon: HotIcon },
+  { value: 'Main', Icon: MainIcon, link: 'rising' },
+  { value: 'Top', Icon: TopIcon, link: 'top' },
+  { value: 'Best', Icon: BestIcon, link: 'best' },
+  { value: 'Hot', Icon: HotIcon, link: 'hot' },
 ].map(assignId);
 
 export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState();
   const [isDropdown, setIsDropdown] = useState(true);
   const [menuLabel, setMenuLabel] = useState('Main');
+  const navigate = useNavigate();
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -56,11 +58,14 @@ export const Tabs = () => {
         <ul
           className={style.list}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {LIST.map(({ value, Icon, id }) => (
+          {LIST.map(({ value, Icon, id, link }) => (
             <Text As='li' key={id}>
               <button
                 className={style.btn}
-                onClick={() => setMenuLabel(value)}>
+                onClick={() => {
+                  setMenuLabel(value);
+                  navigate(`/category/${link}`);
+                }}>
                 {value}
                 {Icon && <Icon width={32} height={32}/>}
               </button>
