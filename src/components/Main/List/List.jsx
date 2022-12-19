@@ -10,7 +10,7 @@ import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
 
 export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
-  const { posts: postsData, loading, depth } =
+  const { posts: postsData, loading, depth, isLast } =
     useSelector(state => state.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   const isDeepEnough = depth >= autoloadDepth;
 
   useEffect(() => {
-    dispatch(postsDataRequestAsync(page, pageSize));
+    dispatch(postsDataRequestAsync({ newPage: page, newPageSize: pageSize }));
   }, [page]);
 
   useEffect(() => {
@@ -47,9 +47,9 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
         {postsData.map((postData, index) =>
           <Post key={postData.data.id} postData={postData.data} />)}
         {loading && (<Preloader height={250} size={100}/>)}
-        { isDeepEnough ?
+        {isDeepEnough && !isLast ?
           <li className={style.showMoreContainer} >
-            <BeautyButton onClick={ () => dispatch(postsDataRequestAsync()) }>
+            <BeautyButton onClick={ () => dispatch(postsDataRequestAsync({})) }>
               Show more
             </BeautyButton>
           </li> :

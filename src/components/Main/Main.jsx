@@ -16,7 +16,7 @@ export const Main = () =>
         <Route path='/' element={<FrontPage/>} />
         <Route path='/auth' element={<Navigate to='/'/>} />
         <Route path='/category/:page' element={
-          <List pageSize={5} autoloadDepth={3} />}>
+          <List pageSize={10} autoloadDepth={2} />}>
           <Route path='post/:id' element={ <Modal><FullPost /></Modal>} />
         </Route>
         <Route path="/404" element={<Page404/>}/>

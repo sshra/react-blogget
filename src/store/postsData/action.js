@@ -1,89 +1,40 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { URL_API } from '../../api/const';
 
-export const POSTSDATA_REQUEST = 'POSTSDATA_REQUEST';
-export const POSTSDATA_REQUEST_SUCCESS = 'POSTSDATA_REQUEST_SUCCESS';
-export const POSTSDATA_REQUEST_ERROR = 'POSTSDATA_REQUEST_ERROR';
-export const CHANGE_PAGE = 'CHANGE_PAGE';
-export const CHANGE_PAGE_SIZE = 'CHANGE_PAGE_SIZE';
-export const
-  POSTSDATA_REQUEST_SUCCESS_AFTER = 'POSTSDATA_REQUEST_SUCCESS_AFTER';
+export const ERROR_REQUEST_SIMULTANEOUS = 'Prevent simultaneous requests.';
 
-export const postsDataRequest = () => ({
-  type: POSTSDATA_REQUEST,
-});
-
-export const postsDataRequestSuccess = (data) => ({
-  type: POSTSDATA_REQUEST_SUCCESS,
-  posts: data.data.children,
-  after: data.data.after,
-  pageSize: data.pageSize,
-});
-
-export const postsDataRequestSuccessAfter = (data) => ({
-  type: POSTSDATA_REQUEST_SUCCESS_AFTER,
-  posts: data.data.children,
-  after: data.data.after,
-});
-
-export const postsDataRequestError = (error) => ({
-  type: POSTSDATA_REQUEST_ERROR,
-  error
-});
-
-export const changePage = (page) => ({
-  type: CHANGE_PAGE,
-  page,
-});
-
-export const changePageSize = (pageSize) => ({
-  type: CHANGE_PAGE_SIZE,
-  pageSize,
-});
-
-export const postsDataRequestAsync =
+export const postsDataRequestAsync = createAsyncThunk(
+  'posts/fetch',
   // Interpreted by the thunk middleware:
-  (newPage, newPageSize) => (dispatch, getState) => {
-    let page = getState().posts.page;
-    if (newPage) {
-      page = newPage;
-      dispatch(changePage(page));
-    }
-    let pageSize = getState().posts.pageSize;
-    if (newPageSize > 0) {
-      pageSize = newPageSize;
-      dispatch(changePageSize(pageSize));
-    }
-
+  ({ newPage, newPageSize }, RTK) => {
+    const { getState } = RTK;
     const token = getState().token.token;
-    const { after, loading, isLast } = getState().posts;
-    if (!token || loading || isLast) return;
-    dispatch(postsDataRequest());
+    const { page, pageSize, requestId, after } = getState().posts;
 
-    axios(`${URL_API}/${page}?limit=${pageSize}&${after ?
+    if (!token || RTK.requestId !== requestId) {
+      return RTK.rejectWithValue({ error: ERROR_REQUEST_SIMULTANEOUS });
+    }
+    console.log(getState().posts, newPage, newPageSize, RTK);
+
+    return axios(`${URL_API}/${page}?limit=${pageSize}&${after ?
         `after=${after}` :
         ''}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
     })
-      .then(posts => {
-        if (after) {
-          dispatch(postsDataRequestSuccessAfter(posts.data));
-        } else {
-          dispatch(postsDataRequestSuccess({ ...posts.data, pageSize }));
-        }
-      })
+      .then(posts => ({ posts: posts.data.data, pageSize }))
       .catch((err) => {
         console.error(err);
-        dispatch(postsDataRequestError(err.toString()));
+        return { error: err.toString() };
       });
-  };
+  });
 
 export const postsDataAutoloadRequest =
   (autoloadDepth) => (dispatch, getState) => {
     const depth = getState().posts.depth;
     if (depth < autoloadDepth) {
-      dispatch(postsDataRequestAsync());
+      dispatch(postsDataRequestAsync({}));
     }
   };
