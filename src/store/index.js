@@ -4,6 +4,11 @@ import postsReducer from './postsData/postsSlice';
 import commentsReducer from './commentsData/commentsSlice';
 import commentReducer from './commentReducer';
 import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from '@redux-saga/core';
+import rootSaga from './saga';
+import { searchReducer } from './search/searchReducer';
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
@@ -12,13 +17,16 @@ export const store = configureStore({
     auth: authReducer,
     posts: postsReducer,
     commentForm: commentReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // immutableCheck: false,
       // serializableCheck: false,
       // thunk: true
-    }).concat(tokenMiddleware)
+    }).concat(tokenMiddleware, sagaMiddleware)
 });
+
+sagaMiddleware.run(rootSaga);
 
 export default store;
