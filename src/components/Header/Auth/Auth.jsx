@@ -17,7 +17,8 @@ export const Auth = () => {
     setIsProfileMenu(!isProfileMenu);
   };
 
-  const logOut = () => {
+  const logOut = e => {
+    e.preventDefault();
     dispatch(deleteToken());
     clearAuth();
   };
@@ -35,7 +36,7 @@ export const Auth = () => {
             />
           </button>
           { isProfileMenu &&
-            <a href="#" onClick={logOut}>
+            <a href="/auth" onClick={logOut}>
               <Text
                 className={style.logout}
                 size={14} color='white'>
