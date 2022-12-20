@@ -9,9 +9,10 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
 import CentredText from '../../../UI/CentredText';
+import { Toast } from '../../../UI/Toast/Toast';
 
 export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
-  const { posts: postsData, loading, depth, isLast } =
+  const { posts: postsData, loading, depth, isLast, error } =
     useSelector(state => state.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
@@ -25,8 +26,6 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
       navigate('/403');
     }
   }, [token]);
-
-  if (!token) return;
 
   useEffect(() => {
     dispatch(postsDataRequestAsync({ newPage: page, newPageSize: pageSize }));
@@ -64,8 +63,9 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
               Show more
             </BeautyButton>
           </li> :
-          <li ref={endList} className={style.end} />
+          postsData.length ? <li ref={endList} className={style.end} /> : ''
         }
+        {error && <Toast type='error'>{error}</Toast> }
         {isLast &&
           <CentredText>No more records!</CentredText>
         }

@@ -20,14 +20,15 @@ export const postsSlice = createSlice({
   extraReducers: {
     [postsDataRequestAsync.pending.type]: (state, action) => {
       const { newPage, newPageSize } = action.meta.arg;
+      if (newPage) {
+        state.page = newPage;
+        state.posts = [];
+        state.after = '';
+        state.isLast = false;
+        state.depth = 0;
+        state.requestId = '';
+      }
       if (!state.requestId && (!state.isLast || newPage)) {
-        if (newPage) {
-          state.page = newPage;
-          state.posts = [];
-          state.after = '';
-          state.isLast = false;
-          state.depth = 0;
-        }
         if (newPageSize) {
           state.pageSize = newPageSize;
         }
@@ -53,20 +54,11 @@ export const postsSlice = createSlice({
       state.pageSize = action.payload.pageSize;
     },
     [postsDataRequestAsync.rejected.type]: (state, action) => {
+      console.log(action);
       if (action.payload.error !== ERROR_REQUEST_SIMULTANEOUS) {
         state.loading = false;
-        state.requestId = '';
-        state.error = action.error.message;
+        state.error = action.payload.error;
       }
-    },
-    changePage(state, action) {
-      state.page = action.payload.page;
-      state.after = '';
-      state.isLast = false;
-      state.depth = 0;
-    },
-    changePageSize(state, action) {
-      state.pageSize = action.payload.pageSize;
     },
   },
 });

@@ -27,7 +27,7 @@ export const postsDataRequestAsync = createAsyncThunk(
       .then(posts => ({ posts: posts.data.data, pageSize }))
       .catch((err) => {
         console.error(err);
-        return { error: err.toString() };
+        return RTK.rejectWithValue({ error: err.toString() });
       });
   });
 
