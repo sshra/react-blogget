@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { commentsDataRequestAsync } from '../store/commentsData/action';
+import { pending } from '../store/commentsData/commentsSlice';
 
 export const useCommentsData = (id) => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const useCommentsData = (id) => {
   const token = useSelector(state => state.token.token);
 
   useEffect(() => {
-    dispatch(commentsDataRequestAsync(id));
+    dispatch({ type: pending.type, id });
   }, [token]);
 
   return commentData;

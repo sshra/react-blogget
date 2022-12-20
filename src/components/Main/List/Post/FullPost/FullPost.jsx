@@ -18,10 +18,7 @@ export const FullPost = () => {
     loading ?
       <Preloader size={100}/> :
       (error !== '' ?
-      <>
-        <Preloader size={250}/>
-        <Toast type='error'>{error}</Toast>
-      </> :
+      <Toast type='error'>{error}</Toast> :
       (data.post && <>
         <h2 className={style.title}>{data.post.title}</h2>
         <div className={style.content}>
