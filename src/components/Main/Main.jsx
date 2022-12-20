@@ -20,7 +20,7 @@ export const Main = () =>
           <List pageSize={10} autoloadDepth={2} />}>
           <Route path='post/:id' element={ <Modal><FullPost /></Modal>} />
         </Route>
-        <Route path="/404" element={<Page403/>}/>
+        <Route path="/403" element={<Page403/>}/>
         <Route path="/404" element={<Page404/>}/>
         <Route path="*" element={<Navigate to='/404'/>}/>
       </Routes>
