@@ -19,8 +19,8 @@ export const postsSlice = createSlice({
   reducers: {},
   extraReducers: {
     [postsDataRequestAsync.pending.type]: (state, action) => {
-      if (!state.requestId) {
-        const { newPage, newPageSize } = action.meta.arg;
+      const { newPage, newPageSize } = action.meta.arg;
+      if (!state.requestId && (!state.isLast || newPage)) {
         if (newPage) {
           state.page = newPage;
           state.posts = [];

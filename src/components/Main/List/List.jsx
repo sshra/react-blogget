@@ -8,6 +8,7 @@ import { postsDataRequestAsync, postsDataAutoloadRequest }
 import { Outlet, useParams } from 'react-router-dom';
 import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
+import CentredText from '../../../UI/CentredText';
 
 export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   const { posts: postsData, loading, depth, isLast } =
@@ -54,6 +55,9 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
             </BeautyButton>
           </li> :
           <li ref={endList} className={style.end} />
+        }
+        {isLast &&
+          <CentredText>No more records!</CentredText>
         }
       </ul>
       <Outlet/>
