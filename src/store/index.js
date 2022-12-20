@@ -6,7 +6,7 @@ import commentReducer from './commentReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from '@redux-saga/core';
 import rootSaga from './saga';
-import { searchReducer } from './search/searchReducer';
+import { searchSlice } from './search/searchSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -17,7 +17,7 @@ export const store = configureStore({
     auth: authReducer,
     posts: postsReducer,
     commentForm: commentReducer,
-    search: searchReducer,
+    search: searchSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -4,15 +4,20 @@ import { ReactComponent as CloseIcon } from './img/close.svg';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export const Modal = ({ children }) => {
   const { page } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const overlayRef = useRef(null);
 
   const closeModal = () => {
-    navigate(`/category/${page}`);
+    if (location.pathname.includes('/search/')) {
+      navigate(`/search`);
+    } else {
+      navigate(`/category/${page}`);
+    }
   };
 
   const handleClick = e => {
@@ -66,5 +71,4 @@ export const Modal = ({ children }) => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  closeModal: PropTypes.func,
 };

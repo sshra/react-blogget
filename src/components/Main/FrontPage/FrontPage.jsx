@@ -4,17 +4,11 @@
 import CentredText from '../../../UI/CentredText';
 import { Text } from '../../../UI/Text';
 
-export const FrontPage = () => {
-  console.log('FrontPage');
-  return (
-    <CentredText height={300}>
-      <Text As='h2's>The front page</Text>
-      <p>Welcome!</p>
-      <p>Please, select category.</p>
-    </CentredText>
-  );
-};
+export const FrontPage = () =>
+  <CentredText height={300}>
+    <Text As='h2's>The front page</Text>
+    <p>Welcome!</p>
+    <p>Please, select category.</p>
+  </CentredText>;
 
-FrontPage.propTypes = {
-
-};
+FrontPage.propTypes = {};

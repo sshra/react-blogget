@@ -8,6 +8,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  searchQuery: '',
   depth: 0,
   pageSize: 10,
 };
@@ -19,13 +20,14 @@ export const postsSlice = createSlice({
     postsPendingAutoLoad: (state, action) => {},
     postsPending: (state, action) => {
       console.log(action);
-      const { newPage, newPageSize } = action.payload;
+      const { newPage, newPageSize, query } = action.payload;
       if (newPage) {
         state.page = newPage;
         state.posts = [];
         state.after = '';
         state.isLast = false;
         state.depth = 0;
+        state.searchQuery = newPage === 'search' ? query : '';
       }
       if (!state.isLast || newPage) {
         if (newPageSize) {
@@ -66,5 +68,3 @@ const { actions, reducer } = postsSlice;
 export const { postsPending, postsSuccess, postsFail, postsPendingAutoLoad } =
   actions;
 export default reducer;
-
-console.log(postsPendingAutoLoad);

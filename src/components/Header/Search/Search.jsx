@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchRequest } from '../../../store/search/action';
+import { useNavigate } from 'react-router-dom';
+import { searchQuery } from '../../../store/search/searchSlice';
 import Svg from '../../../UI/Svg';
 import style from './Search.module.css';
 
 export const Search = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
   const handlerSubmit = e => {
     e.preventDefault();
-    dispatch(searchRequest(search));
+    navigate('/search');
+    dispatch(searchQuery({ search }));
   };
-
 
   return (<form className={style.form} onSubmit={handlerSubmit}>
     <input

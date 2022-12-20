@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import style from './Content.module.css';
 import { Text } from '../../../../../UI/Text';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Content = ({ title, author, postId }) => {
-  const { page } = useParams();
+  const location = useLocation();
 
   return (
     <div className={style.content}>
       <Text As='h2' className={style.title}>
         <Link
           className={style.linkPost}
-          to={`/category/${page}/post/${postId}`}>
+          to={`${location.pathname}/post/${postId}`}>
           <Text
             size={14} tsize={22}
             className={style.linkPost} href="#post">

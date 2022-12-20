@@ -16,6 +16,10 @@ export const Main = () =>
       <Routes>
         <Route path='/' element={<FrontPage/>} />
         <Route path='/auth' element={<Navigate to='/'/>} />
+        <Route path='/search' element={
+          <List pageSize={5} autoloadDepth={2} />}>
+          <Route path='post/:id' element={ <Modal><FullPost /></Modal>} />
+        </Route>
         <Route path='/category/:page' element={
           <List pageSize={3} autoloadDepth={2} />}>
           <Route path='post/:id' element={ <Modal><FullPost /></Modal>} />

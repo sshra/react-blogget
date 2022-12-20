@@ -24,12 +24,10 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   useEffect(() => {
     if (!token) {
       navigate('/403');
+    } else {
+      dispatch(postsPending({ newPage: page, newPageSize: pageSize }));
     }
-  }, [token]);
-
-  useEffect(() => {
-    dispatch(postsPending({ newPage: page, newPageSize: pageSize }));
-  }, [page]);
+  }, [token, page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -52,26 +50,25 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   });
 
   return (
-    <>
-      <ul className={style.list}>
-        {postsData.map((postData, index) =>
-          <Post key={postData.data.id} postData={postData.data} />)}
-        {loading && (<Preloader height={250} size={100}/>)}
-        {!loading && isDeepEnough && !isLast ?
-          <li className={style.showMoreContainer} >
-            <BeautyButton onClick={ () => dispatch(postsPending({})) }>
-              Show more
-            </BeautyButton>
-          </li> :
-          postsData.length ? <li ref={endList} className={style.end} /> : ''
-        }
-        {error && <Toast type='error'>{error}</Toast> }
-        {isLast &&
-          <CentredText>No more records!</CentredText>
-        }
-      </ul>
-      <Outlet/>
-    </>
+    token &&
+      <>
+        <ul className={style.list}>
+          {postsData.map((postData, index) =>
+            <Post key={postData.data.id} postData={postData.data} />)}
+          {loading && (<Preloader height={250} size={100}/>)}
+          {!loading && isDeepEnough && !isLast ?
+            <li className={style.showMoreContainer} >
+              <BeautyButton onClick={ () => dispatch(postsPending({})) }>
+                Show more
+              </BeautyButton>
+            </li> :
+            postsData.length ? <li ref={endList} className={style.end} /> : ''
+          }
+          {error && <Toast type='error'>{error}</Toast> }
+          {isLast && <CentredText>No more records!</CentredText> }
+        </ul>
+        <Outlet/>
+      </>
   );
 };
 

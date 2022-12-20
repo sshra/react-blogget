@@ -16,25 +16,18 @@ export function* fetchPostsAutoload({ payload }) {
 
 export function* fetchPosts({ newPage, newPageSize }) {
   const token = yield select(state => state.token.token);
-  const { page, pageSize, after } =
-    yield select(state => state.posts);
-  const posts =
+  const { page, pageSize, after, searchQuery } =
     yield select(state => state.posts);
 
   if (!token) return;
-
-  /*  if (requestId !== requestId) {
-    yield postsFail({ error: ERROR_REQUEST_SIMULTANEOUS });
-  } */
-  console.log(posts, newPage, newPageSize);
-
   try {
-    const response = yield axios(`${URL_API}/${page}?limit=${pageSize}&${after ?
-        `after=${after}` :
-        ''}`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
+    const endpoint = page === 'search' ?
+      `${URL_API}/${page}?q=${searchQuery}&limit=${pageSize}&${
+        after ? `after=${after}` : ''}` :
+      `${URL_API}/${page}?limit=${pageSize}&${after ? `after=${after}` : ''}`;
+
+    const response = yield axios(endpoint, {
+      headers: { Authorization: `bearer ${token}` },
     });
     yield put(postsSuccess({ posts: response.data.data, pageSize }));
   } catch (error) {
