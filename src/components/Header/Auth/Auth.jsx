@@ -35,7 +35,7 @@ export const Auth = () => {
             />
           </button>
           { isProfileMenu &&
-            <a href="/" onClick={logOut}>
+            <a href="#" onClick={logOut}>
               <Text
                 className={style.logout}
                 size={14} color='white'>
