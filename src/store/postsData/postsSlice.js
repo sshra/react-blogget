@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ERROR_REQUEST_SIMULTANEOUS, postsDataRequestAsync } from './action';
+export const ERROR_REQUEST_SIMULTANEOUS = 'ERROR_REQUEST_SIMULTANEOUS';
 
 const initialState = {
   loading: false,
@@ -10,36 +10,34 @@ const initialState = {
   page: '',
   depth: 0,
   pageSize: 10,
-  requestId: '',
 };
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [postsDataRequestAsync.pending.type]: (state, action) => {
-      const { newPage, newPageSize } = action.meta.arg;
+  reducers: {
+    postsPendingAutoLoad: (state, action) => {},
+    postsPending: (state, action) => {
+      console.log(action);
+      const { newPage, newPageSize } = action.payload;
       if (newPage) {
         state.page = newPage;
         state.posts = [];
         state.after = '';
         state.isLast = false;
         state.depth = 0;
-        state.requestId = '';
       }
-      if (!state.requestId && (!state.isLast || newPage)) {
+      if (!state.isLast || newPage) {
         if (newPageSize) {
           state.pageSize = newPageSize;
         }
         state.loading = true;
         state.error = '';
-        state.requestId = action.meta.requestId;
+        //        state.requestId = action.meta.requestId;
       }
     },
-    [postsDataRequestAsync.fulfilled.type]: (state, action) => {
+    postsSuccess(state, action) {
       state.loading = false;
-      state.requestId = '';
       state.error = '';
       if (state.after) {
         state.posts = [...state.posts, ...action.payload.posts.children];
@@ -53,7 +51,7 @@ export const postsSlice = createSlice({
 
       state.pageSize = action.payload.pageSize;
     },
-    [postsDataRequestAsync.rejected.type]: (state, action) => {
+    postsFail(state, action) {
       console.log(action);
       if (action.payload.error !== ERROR_REQUEST_SIMULTANEOUS) {
         state.loading = false;
@@ -61,10 +59,12 @@ export const postsSlice = createSlice({
       }
     },
   },
+  extraReducers: {},
 });
 
 const { actions, reducer } = postsSlice;
-export const {
-  changePage,
-  changePageSize } = actions;
+export const { postsPending, postsSuccess, postsFail, postsPendingAutoLoad } =
+  actions;
 export default reducer;
+
+console.log(postsPendingAutoLoad);

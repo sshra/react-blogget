@@ -3,13 +3,13 @@ import style from './List.module.css';
 import Post from './Post';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postsDataRequestAsync, postsDataAutoloadRequest }
-  from '../../../store/postsData/action';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
 import CentredText from '../../../UI/CentredText';
 import { Toast } from '../../../UI/Toast/Toast';
+import { postsPending, postsPendingAutoLoad }
+  from '../../../store/postsData/postsSlice';
 
 export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   const { posts: postsData, loading, depth, isLast, error } =
@@ -28,13 +28,13 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   }, [token]);
 
   useEffect(() => {
-    dispatch(postsDataRequestAsync({ newPage: page, newPageSize: pageSize }));
+    dispatch(postsPending({ newPage: page, newPageSize: pageSize }));
   }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries.length && entries[0].isIntersecting) {
-        dispatch(postsDataAutoloadRequest(autoloadDepth));
+        dispatch(postsPendingAutoLoad({ autoloadDepth }));
       }
     }, {
       rootMargin: '100px',
@@ -57,9 +57,9 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
         {postsData.map((postData, index) =>
           <Post key={postData.data.id} postData={postData.data} />)}
         {loading && (<Preloader height={250} size={100}/>)}
-        {isDeepEnough && !isLast ?
+        {!loading && isDeepEnough && !isLast ?
           <li className={style.showMoreContainer} >
-            <BeautyButton onClick={ () => dispatch(postsDataRequestAsync({})) }>
+            <BeautyButton onClick={ () => dispatch(postsPending({})) }>
               Show more
             </BeautyButton>
           </li> :
