@@ -7,6 +7,7 @@ import Modal from '../../UI/Modal';
 import FullPost from './List/Post/FullPost';
 import FrontPage from './FrontPage';
 import Page404 from './Page404';
+import Page403 from './Page403';
 
 export const Main = () =>
   <main className={style.main}>
@@ -19,6 +20,7 @@ export const Main = () =>
           <List pageSize={10} autoloadDepth={2} />}>
           <Route path='post/:id' element={ <Modal><FullPost /></Modal>} />
         </Route>
+        <Route path="/404" element={<Page403/>}/>
         <Route path="/404" element={<Page404/>}/>
         <Route path="*" element={<Navigate to='/404'/>}/>
       </Routes>

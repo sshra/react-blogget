@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postsDataRequestAsync, postsDataAutoloadRequest }
   from '../../../store/postsData/action';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { BeautyButton } from '../../../UI/BeautyButton/BeautyButton';
 import PropTypes from 'prop-types';
 import CentredText from '../../../UI/CentredText';
@@ -17,6 +17,16 @@ export const List = ({ pageSize = 10, autoloadDepth = 2 }) => {
   const dispatch = useDispatch();
   const { page } = useParams();
   const isDeepEnough = depth >= autoloadDepth;
+  const token = useSelector(state => state.token.token);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/403');
+    }
+  }, [token]);
+
+  if (!token) return;
 
   useEffect(() => {
     dispatch(postsDataRequestAsync({ newPage: page, newPageSize: pageSize }));
