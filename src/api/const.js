@@ -7,6 +7,7 @@ export const CLIENT_ID = 'OvZVCtricRhOxjkOoriXrQ';
 export const RESPONSE_TYPE = 'token'; // 'code';
 export const RANDOM_STRING = 'random_string';
 export const AUTH_DURATION = 'temporary';
-export const REDIRECT_URI = 'http://localhost:3000/auth';
+export const REDIRECT_URI = 'https://react-blogget-chi.vercel.app/auth';
+// export const REDIRECT_URI = 'http://localhost:3000/auth';
 export const SCOPE = 'identity submit read';
 
